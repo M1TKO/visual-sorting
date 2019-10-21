@@ -1,6 +1,6 @@
 var sorted = false;
-var arrLenInit = 1000;
-var arrMaxNumInit = 10000;
+var arrLenInit = 10000;
+var arrMaxNumInit = 100000;
 
 var randomArray = generateRandomArray(arrLenInit, arrMaxNumInit);
 
@@ -76,15 +76,66 @@ function generateRandomArray(elementsNumber, maxNum) {
     return _array;
 }
 
+function selectionSort(_arr) {
+    arr = _arr.slice();
+    var min;
+    var temp;
+    for (var index = 0; index < arr.length; index++) {
+        min = index;
+
+        for (var i = index+1; i < arr.length; i++) {
+            if (arr[i] < arr[min]) {
+                min = i;
+            }
+        }
+        if(arr[index] !== arr[min]) {
+            temp = arr[index];
+            arr[index] = arr[min];
+            arr[min] = temp;
+        }
+    }
+}
+
+function execTime(text, sortFunc, _array) {
+    var text;
+    var t1 = performance.now();
+    sortFunc(_array)
+    var t2 = performance.now();
+    text = text.replace(/%%TIME%%/g, (t2 - t1).toLocaleString() + ' ms');
+
+    var node = document.createElement("LI");
+    var textnode = document.createTextNode(text);
+    node.appendChild(textnode);
+    window.results.appendChild(node); 
+}
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
+function generateRandomArray(elementsNumber, maxNum) {
+    var _array = [];
+    for (var i = 0; i < elementsNumber; i++) {
+        _array[i] = getRandomInt(maxNum);
+    }
+    return _array;
+}
+
 window.onload = function () {
-    console.log(this.randomArray)
+    console.log(randomArray);
+
     execTime(
-        "Bubble sort : %%TIME%% / " + arrLenInit + " elements",
+        "%%TIME%% | Bubble sort : " + arrLenInit.toLocaleString() + " elements",
         bubbleSort, randomArray
+    )
+    
+    execTime(
+        "%%TIME%% | Both sides bubble sort (custom) : " + arrLenInit.toLocaleString() + " elements",
+        bothSidesBubbleSort, randomArray
         )
 
     execTime(
-        "Both sides bubble sort (custom) : %%TIME%% / " + arrLenInit + " elements",
-        bothSidesBubbleSort, randomArray
+        "%%TIME%% | Selection sort : " + arrLenInit.toLocaleString() + " elements",
+        bubbleSort, randomArray
     )
 }
