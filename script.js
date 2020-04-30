@@ -1,6 +1,6 @@
 var sorted = false;
-var arrLenInit = 10000;
-var arrMaxNumInit = 100000;
+var arrLenInit = 20;
+var arrMaxNumInit = 30;
 
 var randomArray = generateRandomArray(arrLenInit, arrMaxNumInit);
 
@@ -96,6 +96,26 @@ function selectionSort(_arr) {
     }
 }
 
+function insertionSort(_arr) {
+    arr = _arr.slice();
+    
+    for (var index = 1; index < arr.length; index++) {
+        var temp;
+
+        for(var j = index; j > 0; j--) {
+            if(arr[j] < arr[j-1]) {
+                temp = arr[j];
+                arr[j] = arr[j-1];
+                arr[j-1] = temp;
+                break;
+            } else {
+
+            }
+        }
+    }
+    console.log(arr)
+}
+
 function execTime(text, sortFunc, _array) {
     var text;
     var t1 = performance.now();
@@ -124,18 +144,19 @@ function generateRandomArray(elementsNumber, maxNum) {
 window.onload = function () {
     console.log(randomArray);
 
-    execTime(
-        "%%TIME%% | Bubble sort : " + arrLenInit.toLocaleString() + " elements",
-        bubbleSort, randomArray
-    )
+    insertionSort(randomArray);
+    // execTime(
+    //     "%%TIME%% | Bubble sort : " + arrLenInit.toLocaleString() + " elements",
+    //     bubbleSort, randomArray
+    // )
     
-    execTime(
-        "%%TIME%% | Both sides bubble sort (custom) : " + arrLenInit.toLocaleString() + " elements",
-        bothSidesBubbleSort, randomArray
-        )
+    // execTime(
+    //     "%%TIME%% | Both sides bubble sort (custom) : " + arrLenInit.toLocaleString() + " elements",
+    //     bothSidesBubbleSort, randomArray
+    //     )
 
-    execTime(
-        "%%TIME%% | Selection sort : " + arrLenInit.toLocaleString() + " elements",
-        bubbleSort, randomArray
-    )
+    // execTime(
+    //     "%%TIME%% | Selection sort : " + arrLenInit.toLocaleString() + " elements",
+    //     bubbleSort, randomArray
+    // )
 }
